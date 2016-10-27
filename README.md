@@ -9,6 +9,7 @@ Las Querys que utilizo son:
 
 1. SELECT codi,nom FROM alumne;
   ..1. Para tener una lista de todos los alumnos que tenemos en la base de datos.
+  
 2. SELECT al.nom, tu.nom, ass.nom FROM alumne al, assignatura ass,tutoria tu,tutoriaalumne tual WHERE al.codi=tual.codiAlumne AND tu.codi=tual.codiTutoria AND tu.codiAssignatura=ass.codi AND al.codi=?;
   ..1. Para tener las listas de Asignaturas y tutorias de un alumno en concreto.
 
