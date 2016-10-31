@@ -1,9 +1,9 @@
 # ServletJDBC
 
-Versión 1.0 de Java ServletJDBC. 
-Creado por **Andreu Luna Font**
-Fecha 29/10/2016
-IDE: Netbeans 8.0.2
+Versión 1.0 de Java ServletJDBC.  
+Creado por **Andreu Luna Font**  
+Fecha 29/10/2016  
+IDE: Netbeans 8.0.2  
 
 Librerias:
 * JDK (1.7)
