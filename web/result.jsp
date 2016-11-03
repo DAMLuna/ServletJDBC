@@ -51,6 +51,10 @@
                 </tr>
                 <%}%>
             </table>
+            </br>
+             <form>
+                <input type="button" value="Descargar XML" onClick="document.location.href='C:\Users\kerinvel\Documents\NetBeansProjects\-Acceso a datos\2.2Servlet\src\java\xml\XmlAlumno.xml'">
+            </form>
         </center>
     </body>
 </html>

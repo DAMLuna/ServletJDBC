@@ -17,16 +17,27 @@ import javax.servlet.http.HttpServletRequest;
  * @author Kerinvel
  */
 public class Consultas {
-    public static ResultSet consultar(Connection con) throws SQLException {
+    public ResultSet consultar(Connection con) throws SQLException {
         try {
             
             String query = "SELECT codi,nom FROM alumne";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
+            System.out.println("Fin de la consulta.");
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+    public ResultSet consultarAlumno(Connection con,int cod) throws SQLException {
+        try {
             
-            while(rs.next()){
-                System.out.println("Codigo: "+rs.getString("codi")+" - Nombre: "+rs.getString("nom"));
-            }
+            String query = "Select al.nom, tu.nom, ass.nom from alumne al, assignatura ass,tutoria tu,tutoriaalumne tual where al.codi=tual.`codiAlumne` and tu.codi=tual.`codiTutoria` and tu.`codiAssignatura`=ass.codi and al.codi="+cod+";";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
             System.out.println("Fin de la consulta.");
             return rs;
         } catch (SQLException e) {

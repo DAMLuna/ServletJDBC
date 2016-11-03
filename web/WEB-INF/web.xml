@@ -7,7 +7,7 @@
     <servlet-mapping>
         <servlet-name>ServlAlumnos</servlet-name>
         <url-pattern>/ServlAlumnos</url-pattern>
-        <url-pattern></url-pattern>
+        <url-pattern/>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
     <session-config>

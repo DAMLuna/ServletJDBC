@@ -8,6 +8,7 @@ package servlet;
 import Clases.Alumnos;
 import Clases.Conexion;
 import Clases.Consultas;
+import Clases.GeneradorXml;
 import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -72,15 +73,14 @@ public class ServlAlumnos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Conexion con = new Conexion();
+        Consultas q = new Consultas();
         try {
-            Class.forName("org.gjt.mm.mysql.Driver");
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/conector_add", "andreu", "andreu");
-            String query = "SELECT codi,nom FROM alumne";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            ResultSet rs = q.consultar(con.doConnection());
             request.setAttribute("listaAlumnos", rs);
             RequestDispatcher a = request.getRequestDispatcher("/index.jsp");
             a.forward(request, response);
+            con.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(ServlAlumnos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -100,28 +100,26 @@ public class ServlAlumnos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int cod = Integer.parseInt(request.getParameter("codAlumno"));
+        //Comprueba si hemos dado un valor valido.
         if (cod == 0) {
             processRequest(request, response);
         } else {
             try {
-                ResultSet rs;
+                Conexion con = new Conexion();
+                Consultas q = new Consultas();
+                GeneradorXml gx=new GeneradorXml();
                 int i;
                 ArrayList<Alumnos> alum = new ArrayList();
-
-                Class.forName("org.gjt.mm.mysql.Driver");
-                Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/conector_add", "andreu", "andreu");
-                String query = "Select al.nom, tu.nom, ass.nom from alumne al, assignatura ass,tutoria tu,tutoriaalumne tual where al.codi=tual.`codiAlumne` and tu.codi=tual.`codiTutoria` and tu.`codiAssignatura`=ass.codi and al.codi=?;";
-                PreparedStatement pst = conn.prepareStatement(query);
-                pst.setInt(1, cod);
-                rs = pst.executeQuery();
+                ResultSet rs = q.consultarAlumno(con.doConnection(), cod);
                 while (rs.next()) {
                     Alumnos a = new Alumnos(rs.getString(1), rs.getString(2), rs.getString(3));
                     alum.add(a);
                 }
+                gx.prepararArchivo(alum);
                 request.setAttribute("listaAssTut", alum);
                 RequestDispatcher a = request.getRequestDispatcher("/result.jsp");
                 a.forward(request, response);
-                pst.close();
+                con.closeConnection();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ServlAlumnos.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Curso>
+   <Alumnos>
+      <Alumno>
+         <Nombre>Jose Martinez</Nombre>
+         <Asignaturas>
+            <Asignatura>Programació</Asignatura>
+            <Asignatura>Programació</Asignatura>
+         </Asignaturas>
+         <Tutorias>
+            <Tutoria>Tutoria 1 Programació</Tutoria>
+            <Tutoria>Tutoria 2 Programació</Tutoria>
+         </Tutorias>
+      </Alumno>
+   </Alumnos>
+</Curso>
+
